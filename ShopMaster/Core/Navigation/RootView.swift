@@ -9,7 +9,7 @@ struct RootView: View {
                     Label("Home", systemImage: "house")
                 }
 
-            Text("Products")
+            ProductsView()
                 .tabItem {
                     Label("Products", systemImage: "list.bullet")
                 }
