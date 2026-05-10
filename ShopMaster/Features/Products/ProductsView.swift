@@ -6,19 +6,13 @@ struct ProductsView: View {
 
     var body: some View {
         NavigationStack {
+            Text("Products count: \(viewModel.products.count)")
             List(viewModel.products) { product in
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(product.name)
-                        .font(.headline)
-
-                    Text("R$ \(product.price, specifier: "%.2f")")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                }
+                    ProductRowView(product: product)
             }
             .navigationTitle("Products")
         }
-        .onAppear {
+        .task {
             viewModel.loadProducts()
         }
     }
