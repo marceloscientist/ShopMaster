@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct HomeView: View {
+
+    @EnvironmentObject var cartViewModel: CartViewModel
+
     var body: some View {
         VStack {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
+
             Text("Hello, world!")
         }
         .padding()
@@ -21,4 +25,5 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
+        .environmentObject(CartViewModel())
 }
