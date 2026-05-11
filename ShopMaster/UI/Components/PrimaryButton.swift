@@ -3,20 +3,16 @@ import SwiftUI
 struct PrimaryButton: View {
 
     let title: String
+    let isCompact: Bool
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
             Text(title)
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: isCompact ? nil : .infinity)
                 .padding()
-                .font(.headline)
         }
         .buttonStyle(.borderedProminent)
-        .controlSize(.large)
+        .controlSize(isCompact ? .small : .large)
     }
-}
-
-#Preview {
-    PrimaryButton(title: "Add to Cart") {}
 }

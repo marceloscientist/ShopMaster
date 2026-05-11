@@ -8,4 +8,5 @@ final class ProductsViewModel: ObservableObject {
     func loadProducts() {
         products = ProductsService.fetchProducts()
     }
+    
 }

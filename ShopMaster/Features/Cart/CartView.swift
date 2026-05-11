@@ -3,6 +3,10 @@ import SwiftUI
 struct CartView: View {
 
     @EnvironmentObject var cartViewModel: CartViewModel
+    @Binding var selectedTab: Tab
+
+    @State private var showConfirmation = false
+
 
     var body: some View {
         NavigationStack {
@@ -79,8 +83,16 @@ struct CartView: View {
                         "Total amount \(cartViewModel.totalPrice) currency"
                     )
 
-                    PrimaryButton(title: "Clear Cart", isCompact: false) {
-                        cartViewModel.clear()
+                    PrimaryButton(title: "Confirm Purchase", isCompact: false) {
+                        showConfirmation = true
+                    }
+                    .padding([.horizontal, .bottom])
+                    .alert("Purchase confirmed", isPresented: $showConfirmation) {
+                        Button("OK") {
+                            cartViewModel.checkout()
+                            selectedTab = .home
+                        }
+
                     }
                     .padding([.horizontal, .bottom])
                 }
@@ -91,6 +103,7 @@ struct CartView: View {
 }
 
 #Preview {
-    CartView()
+    CartView(selectedTab: .constant(.cart))
         .environmentObject(CartViewModel())
 }
+
