@@ -9,26 +9,38 @@ enum Tab {
 struct RootView: View {
 
     @State private var selectedTab: Tab = .home
+    @State private var isLoading = true
 
     var body: some View {
-        TabView(selection: $selectedTab) {
 
-            HomeView(selectedTab: $selectedTab)
-                .tabItem {
-                    Label("Home", systemImage: "house")
+        if isLoading {
+            LoadingView()
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        isLoading = false
+                    }
                 }
-                .tag(Tab.home)
-
-            ProductsView()
-                .tabItem {
-                    Label("Products", systemImage: "list.bullet")
-                }
-                .tag(Tab.products)
-
-            CartView(selectedTab: $selectedTab)                .tabItem {
+        } else {
+            
+            TabView(selection: $selectedTab) {
+                
+                HomeView(selectedTab: $selectedTab)
+                    .tabItem {
+                        Label("Home", systemImage: "house")
+                    }
+                    .tag(Tab.home)
+                
+                ProductsView()
+                    .tabItem {
+                        Label("Products", systemImage: "list.bullet")
+                    }
+                    .tag(Tab.products)
+                
+                CartView(selectedTab: $selectedTab)                .tabItem {
                     Label("Cart", systemImage: "cart")
                 }
                 .tag(Tab.cart)
+            }
         }
     }
 }
